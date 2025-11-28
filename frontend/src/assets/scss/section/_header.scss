@@ -1,0 +1,158 @@
+.header_logo {
+  border-bottom: 1px solid var(--black200);
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    margin: 10px;
+
+    /* 🎞 필름형 로고 */
+    em {
+      width: 42px;
+      height: 30px;
+      position: relative;
+      background: linear-gradient(135deg, #f8485e, #ff6e6e);
+      border-radius: 6px;
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 🎞 필름 홀 (좌우 3개씩) */
+    em::before,
+    em::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 80%;
+      background: repeating-linear-gradient(
+        to bottom,
+        #fff 0 4px,
+        transparent 4px 8px
+      );
+      opacity: 0.9;
+    }
+
+    em::before { left: 3px; }
+    em::after { right: 3px; }
+
+    /* 내부 텍스트 (V) */
+    em span {
+      font-weight: 900;
+      font-size: 18px;
+      color: #fff;
+      letter-spacing: 1px;
+      z-index: 1;
+    }
+
+    /* 로고 텍스트 (VidSpark) */
+    span {
+      font-size: 20px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #e8ebf2;
+      letter-spacing: 1px;
+      margin-left: 10px;
+      line-height: 1.1;
+    }
+  }
+}
+
+.header_menu {
+  padding: 10px 0;
+
+  .menu {
+    border-bottom: 1px solid var(--black200);
+
+    li {
+      margin-bottom: 5px;
+
+      a {
+        /* 오타 수정: font-style → font-size */
+        font-size: 1rem;
+        display: block;
+        padding: 0.9rem 2rem 0.9rem 3.125rem;
+        margin: 0 0.625rem;
+        border-radius: 40px;
+        position: relative;
+        line-height: 1;
+        color: var(--white200);
+        transition: all 0.3s;
+
+        svg {
+          width: 1.25rem;
+          height: 1.25rem;
+          position: absolute;
+          left: 1.25rem;
+          top: 0.75rem;
+        }
+
+        &:hover {
+          background-color: var(--black100);
+          color: var(--white);
+        }
+      }
+
+      &.active a {
+        background-color: var(--black100);
+        color: var(--white);
+      }
+    }
+  }
+
+  .keyword {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--black200);
+
+    li {
+      display: inline-block;
+
+      a {
+        display: inline-block;
+        padding: 7px 15px;
+        border: 1px solid var(--black200);
+        font-size: 0.8rem;
+        border-radius: 40px;
+        margin: 3px 1px;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: var(--black100);
+          color: var(--white);
+        }
+      }
+
+      &.active a {
+        background-color: var(--black100);
+        color: var(--white);
+      }
+    }
+  }
+}
+
+.header_sns {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 260px;
+  text-align: center;
+  padding: 15px 0 10px;
+  background-color: var(--blackAlpha100);
+  backdrop-filter: blur(10px);
+
+  li {
+    display: inline-block;
+
+    a {
+      padding: 5px 7px;
+      display: inline-block;
+    }
+  }
+}
+

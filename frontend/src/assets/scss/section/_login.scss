@@ -1,0 +1,182 @@
+:root {
+  --bg: #1f232b;
+  --panel: #262931;
+  --field: #373a44;
+  --text: #e6e8ee;
+  --muted: #9ba3b4;
+  --accent: #67b7e1;
+  --ring: #7bc7f0;
+  --radius: 12px;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  color: var(--text);
+  padding: 24px;
+
+  .login_box {
+    width: 520px;
+    max-width: 92vw;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      user-select: none;
+
+      .logo-bars {
+        display: inline-grid;
+        grid-auto-flow: column;
+        gap: 3px;
+        align-items: end;
+
+        span { display: block; width: 8px; border-radius: 2px; }
+        span:nth-child(1) { height: 14px; background: #ff4d4d; }
+        span:nth-child(2) { height: 10px; background: #4fa3ff; }
+        span:nth-child(3) { height: 6px;  background: #ffd24d; }
+      }
+
+      h1 { margin: 0; font-size: 34px; font-weight: 700; letter-spacing: .2px; }
+    }
+
+    .panel {
+      background: var(--bg);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.03) inset;
+
+      .title {
+        display: flex; align-items: center; gap: 8px;
+        margin: 0 0 18px; font-size: 22px; font-weight: 700;
+        svg { width: 20px; height: 20px; }
+      }
+
+      .login_info {
+        .field {
+          display: flex; align-items: center; gap: 10px;
+          background: var(--field);
+          height: 48px; padding: 0 14px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(255,255,255,.05);
+          transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
+
+          svg { width: 18px; height: 18px; opacity: .9; }
+
+          input {
+            flex: 1 1 auto; height: 100%;
+            border: 0; outline: 0; background: transparent;
+            color: var(--text); font-size: 14px;
+
+            &::placeholder { color: var(--muted); }
+          }
+
+          &:focus-within {
+            border-color: var(--ring);
+            box-shadow: 0 0 0 4px rgba(103,183,225,.25);
+            background: #3b3e48;
+          }
+
+          & + .field { margin-top: 14px; }
+        }
+
+        .pw-extra {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-top: 10px; font-size: 13px; color: var(--muted);
+
+          label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+          .checkbox {
+            appearance: none; width: 16px; height: 16px; border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.25); background: transparent;
+            display: inline-grid; place-items: center;
+
+            &:checked {
+              background: var(--accent); border-color: var(--accent);
+
+              &::after {
+                content: "✓"; font-size: 12px; color: #0b1118; font-weight: 900; line-height: 1;
+              }
+            }
+          }
+        }
+      }
+      
+      .actions {
+        margin-top: 18px; display: flex; align-items: center; justify-content: space-between;
+
+        .links {
+          display: flex; gap: 16px; align-items: center;
+
+          .link {
+            background: none; border: 0; padding: 0; margin: 0;
+            color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px;
+          }
+        }
+
+        .btn.btn-primary {
+          background: var(--accent); color: #0b1118; font-weight: 700;
+          border: 0; border-radius: 10px; padding: 12px 22px; min-width: 140px;
+          cursor: pointer; transition: filter .15s ease, transform .02s ease;
+
+          &:hover  { filter: brightness(1.05); }
+          &:active { transform: translateY(1px); }
+        }
+      }
+
+      .div_login_bottom {
+        text-align: center; margin-top: 18px; color: var(--muted);
+        .btn_underline {
+          background: none; border: 0; padding: 0 0 1px; margin-left: 6px;
+          color: var(--text); text-decoration: underline; cursor: pointer; font-size: 14px;
+        }
+      }
+    }
+  }
+}
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* user-block 안에 들어가는 작은 타이머 */
+.user-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.token-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(123, 199, 240, 0.4);
+  font-size: 11px;
+  color: var(--muted);
+
+  white-space: nowrap;        /* 줄바꿈 방지 */
+  min-width: 120px;           /* 전체 박스 최소 폭 고정 (원하는 값으로 조절) */
+  justify-content: space-between;
+}
+
+.token-timer .label {
+  opacity: 0.9;
+}
+
+.token-timer .time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--accent);
+
+  display: inline-block;
+  width: 40px;                /* "00:00" ~ "123:45" 까지 들어갈 만큼 */
+  text-align: right;          /* 숫자 오른쪽 정렬 */
+}

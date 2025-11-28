@@ -1,0 +1,117 @@
+/* --- 공통 레이아웃 --- */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 16px;
+  width: 100%;
+}
+/* 검색 영역 스코프 */
+#search { 
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* 폼 래퍼: pill */
+#search .search_inner{
+  position: relative;              /* 드롭다운 기준 */
+  display: flex;
+  align-items: center;
+  width: 60%;
+  margin-left: 60px;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid #d3d3d3;
+  border-radius: 40px;
+  background: var(--black100, #141923);
+  overflow: visible;               /* 자동완성 나와야 해서 visible */
+}
+
+/* 입력+버튼 라인 */
+#search .auto-wrap{
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;                  /* 남는 공간 다 먹기 */
+  min-width: 0;                    /* 줄어들 때 깨짐 방지 */
+}
+
+/* 인풋 */
+#search .search_input{
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0 16px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+}
+
+/* 버튼(아이콘) — 흰 네모 제거 + 오른쪽 고정 */
+#search .btn_search{
+  flex: 0 0 48px;                  /* 고정 폭 */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-left: 1px solid #d3d3d3;  /* 경계선은 버튼 쪽만 */
+  background: transparent !important;  /* 전역 규칙 덮어쓰기 */
+  color: #fff;
+  cursor: pointer;
+  border-top-right-radius: 40px;   /* 혹시 삐져나올 때 대비 */
+  border-bottom-right-radius: 40px;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+#search .btn_search svg{
+  width: 20px;
+  height: 20px;
+}
+
+/* 자동완성 드롭다운(있을 때) */
+#search .auto-list{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 48px;                     /* 버튼 폭만큼 여백 */
+  margin-top: 8px;
+  padding: 6px;
+  list-style: none;
+  background: var(--black100, #141923);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+  max-height: 260px;
+  overflow: auto;
+  z-index: 1000;
+}
+
+#search .auto-item{
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #e8ebf2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#search .auto-item:hover,
+#search .auto-item.is-active{
+  background: rgba(123,199,240,0.12);
+}
+
+#search .auto-mark{
+  background: transparent;
+  color: var(--accent, #67b7e1);
+  font-weight: 700;
+}
+
+/* 모바일 대응 */
+@media (max-width: 560px){
+  #search .search_inner{ width: 100%; margin-left: 0; }
+  #search .auto-list{ right: 44px; }
+}

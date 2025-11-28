@@ -1,0 +1,98 @@
+services:
+ minio:
+  image: minio/minio:latest
+  container_name: minio
+  ports:
+   - "9000:9000" # S3 API
+   - "9001:9001" # 관리 콘솔
+  environment:
+    MINIO_ROOT_USER: minioadmin
+    MINIO_ROOT_PASSWORD: minioadmin
+  volumes:
+   - ./minio_data:/data
+  command: server /data --console-address ":9001"
+ mysql:
+  image: mysql:8.0
+  container_name: mysql
+  environment:
+   MYSQL_DATABASE: ${MYSQL_DATABASE}
+   MYSQL_USER: ${MYSQL_USER}
+   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+   TZ: Asia/Seoul
+  ports:
+    - "3307:3306"
+  volumes:
+    - ./deploy/mysql:/var/lib/mysql
+  healthcheck:
+   test: ["CMD","mysqladmin","ping","-h","localhost","-p${MYSQL_ROOT_PASSWORD}"]
+   interval: 10s
+   timeout: 5s
+   retries: 10
+
+ elasticsearch:
+  build: ./elasticsearch
+  container_name: elasticsearch
+  environment:
+    - discovery.type=single-node
+    - xpack.security.enabled=false
+    - xpack.security.http.ssl.enabled=false
+    - ES_JAVA_OPTS=-Xms1g -Xmx1g
+  ports:
+    - "9200:9200"
+  volumes:
+    - ./deploy/elasticsearch:/usr/share/elasticsearch/data
+  healthcheck:
+    test: ["CMD-SHELL","curl -s http://localhost:9200 >/dev/null || exit 1"]
+    interval: 10s
+    timeout: 5s
+    retries: 20
+
+ kibana:
+  image: docker.elastic.co/kibana/kibana:8.17.4
+  container_name: kibana
+  environment:
+    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  ports:
+    - "5601:5601"
+  depends_on:
+    - elasticsearch
+ redis:
+   image: redis:7-alpine
+   container_name: redis
+#   command: ["redis-server","--appendonly","test"]
+   ports:
+     - "6379:6379"
+   healthcheck:
+     test: ["CMD","redis-cli","ping"]
+     interval: 5s
+     timeout: 2s
+     retries: 10
+ backend:
+  build: ./backend
+  container_name: backend
+  environment:
+    SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+    SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+    SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+    SPRING_ELASTICSEARCH_URIS: ${ELASTIC_URI}
+    #Redis 접속 설정 추가
+    SPRING_DATA_REDIS_HOST: ${REDIS_HOST:-redis}
+    SPRING_DATA_REDIS_PORT: ${REDIS_PORT:-6379}
+    SPRING_DATA_REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+#    VIEW_FLUSH_ENABLED: "true"
+  ports:
+    - "8080:8080"
+  depends_on:
+    mysql:
+      condition: service_healthy
+    elasticsearch:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+ frontend:
+  build: ./frontend
+  container_name: frontend
+  ports: ["5173:5173"]
+#  depends_on: [backend]

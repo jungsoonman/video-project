@@ -1,0 +1,36 @@
+저장 : MiniO/S3(원본 파일) , DB에는 메타데이터 + storage_key / url
+
+인증 : 로그인 후 Bearer 액세스 토큰
+
+프로필 : local 에서 MiniO , Mysql 사용
+
+
+    -서비스
+        엔드포인트
+            업로드
+                - post /api/videos/upload (multipart)
+            조회 & 리스트
+                - get /api/videos/{id} (단건 조회)
+                - get /api/videos (페이지네이션 + 정렬: 최신순/조회순 /추천순)
+            조회수 /좋아요 카운트
+                -POST /api/videos/{id}/view
+                -Post /api/videos/{id}/like   / DELETE api/videos/{id}/like
+               > 저장 전략
+                    Redis : views: {videoId} 카운터, likes:{videoId} 집합/카운터
+                    배치 : @Scheduled로 주기적으로 MySQL 업데이트(아래 확장 섹션 참고)
+            삭제
+                - DELETE /api/videos/{id}
+    확장 서비스
+            검색 / 추천 (Elasticsearch)
+                - GET /api/search?q=...&sort=...
+                - 추천 GET /api/videos/{id}/related (ES MLT)
+
+            업로드 파이프 라인
+                업로드 -> status = PROCESSING 저장 -> (옵션) 워커가 썸네일 / 트랜스 코딩 -> READY
+                썸네일 생성 시 thumbnail_key/url 업데이트
+            프리사인드 재생(보안)
+                공개 URL 대신 Presigned GET 발급 : GET /api/videos/{id}/play-url
+            대시보드 통계
+                기간별 조회수 / 좋아요 / 구독(ES Aggregation)
+                - GET /api/studio/metrics?channelId=...&from=..
+

@@ -1,0 +1,31 @@
+# --- Backend (Java / Gradle) ---
+.gradle/
+**/.gradle/
+build/
+**/build/
+out/
+**/out/
+
+# Gradle caches & wrapper dists (root에 생기던 문제 파일들)
+caches/
+wrapper/
+wrapper/dists/
+
+# --- Frontend (Node / React) ---
+node_modules/
+dist/
+npm-debug.log*
+yarn-error.log*
+
+# --- Env / DB data ---
+.env
+.env.*
+deploy/mysql/
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+EOF

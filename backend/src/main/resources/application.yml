@@ -1,0 +1,62 @@
+spring:
+  elasticsearch:
+    uris: http://elasticsearch:9200
+  test:
+    database:
+      replace:none #????? '??' ?? , ?? datasource? ??? ???? ?.
+  datasource:
+    url: jdbc:mysql://mysql:3306/app?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: app
+    password: app
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update #?? ??:update / ???:create-drop
+    properties:
+      hibernate:
+        format-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  data:
+    redis:
+      host: reids
+      port: 6379
+      timeout: 2s
+jwt:
+  secret: "r8lTz0YRqde5seN6jHW9O0ixq019o+qAkV7AgExXMMD9PZTePaICXdC9bP9UnaMCkZiDirVCknsluBAjV258Uw=="
+  access-token-validity-ms: 900000  #15분
+  refresh-token-validity-ms: 604800000  #7일
+security:
+  cors:
+    allowed-origins: "http://localhost:5173"
+minio:
+  endpoint-internal: http://minio:9000 #컨테이너끼리 통신
+  endpoint-public: http://localhost:9000  #브라우저가 실제로 접근하는 주소(개발)
+  access-key: minioadmin
+  secret-key: minioadmin
+  buckets:
+    videos : videos
+    profile : profile
+    thumbnail : thumbnail
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    io.minio: DEBUG
+    com.example.backend: DEBUG
+server:
+  error:
+    include-message: always
+    include-exception: true
+
+
+
+
+

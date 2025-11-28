@@ -1,0 +1,15 @@
+{
+  "analysis": {
+    "analyzer": {
+      "videos_title_analyzer": {
+        "char_filter": [],
+        "tokenizer": "nori_tokenizer",
+        "filter": [
+          "lowercase",
+          "nori_part_of_speech",
+          "nori_readingform"
+        ]
+      }
+    }
+  }
+}

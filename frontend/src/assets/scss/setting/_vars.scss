@@ -1,0 +1,42 @@
+/* 변수만 :root */
+:root {
+  --mainfont-nanum: "nanumSquareNeo";
+  --mainfont-nexon: "nexonLv1";
+
+  --black: #000;
+  --black100: #111;
+  --black200: #222;
+  --black300: #333;
+  --black400: #444;
+  --black500: #555;
+
+
+  --blackAlpha100: #11111125;
+
+
+
+  --white: #fff;
+  --white100: #efefef;
+  --white200: #d9d9d9;
+  --white300: #fff;
+  --white400: #fff;
+  --white500: #fff;
+
+  --red: #f00;
+}
+
+/* 타이포는 html에 */
+html {
+  font-family: var(--mainfont-nanum), var(--mainfont-nexon), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* 렌더링 최적화 */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+

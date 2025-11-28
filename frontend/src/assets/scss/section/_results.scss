@@ -1,0 +1,136 @@
+:root{
+  --panel:#0b0e13;
+  --bg:#141923;
+  --field:#222938;
+  --text:#e8ebf2;
+  --muted:#97a0b3;
+  --accent:#67b7e1;
+  --ring:#7bc7f0;
+  --danger:#c75151;
+}
+
+.srch{display:grid; gap:16px;}
+.srch__header{display:flex; align-items:baseline; gap:12px;}
+.srch__title{color:var(--text); font-size:18px; font-weight:700; margin:0;}
+.srch__count{color:var(--muted); font-size:13px;}
+
+.srch__list{display:grid; gap:16px; margin:0; padding:0; list-style:none;}
+
+.srch-item{
+  display:grid;
+  grid-template-columns: 320px 1fr auto;
+  gap:14px;
+  align-items:flex-start;
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:14px;
+  padding:12px;
+  transition:transform .12s ease, border-color .12s ease, background-color .12s ease, background-image .12s ease;
+
+  /* ⬇️ 배경 분리 */
+  background-color: var(--bg);
+  background-image: none;
+}
+.srch-item:hover{
+  border-color:rgba(123,199,240,.25);
+  transform:translateY(-1px);
+
+  /* ⬇️ 안전하게 분리해서 사용 */
+  background-color: var(--bg);
+  background-image: linear-gradient(0deg, rgba(123,199,240,.06), rgba(123,199,240,.06));
+}
+
+/* 썸네일 */
+.srch-item__thumb{
+  position:relative;
+  aspect-ratio:16/9;
+  width:100%;
+  display:block;
+  border-radius:12px;
+  overflow:hidden;
+  border:none;
+  padding:0;
+  background-color: var(--field);
+}
+.srch-item__thumb img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+
+/* 시간 배지 */
+.pill{
+  position:absolute; right:8px; bottom:8px;
+  padding:2px 6px; border-radius:6px;
+  font-size:12px; line-height:1; color:#fff; background:#000a;
+  backdrop-filter: blur(2px);
+}
+
+/* 본문 */
+.srch-item__body{display:grid; gap:8px; min-width:0;}
+.srch-item__title{
+  margin:0; font-size:16px; line-height:1.35; font-weight:700; color:var(--text);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.srch-item__title a{ color:inherit; text-decoration:none; }
+.srch-item__title a:hover{ text-decoration:underline; text-decoration-color: var(--ring); }
+
+/* 메타/아바타 */
+.srch-item__meta{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  color:var(--muted); font-size:13px;
+}
+.srch-item__avatar{
+  width:22px; height:22px; flex:0 0 22px;
+  border-radius:50%; object-fit:cover; background-color:var(--field);
+  border:1px solid rgba(255,255,255,.12);
+}
+.srch-item__meta .creator{ color:var(--muted); }
+.srch-item__meta .dot{ opacity:.6; }
+
+/* 태그 칩 */
+.srch-item__badges{display:flex; flex-wrap:wrap; gap:6px;}
+.chip{
+  border:1px solid rgba(255,255,255,.1);
+  padding:4px 8px; border-radius:999px; font-size:12px; color:var(--muted);
+  background-color: var(--panel);
+}
+.chip.as-button{ cursor:pointer; }
+.chip.as-button:hover{ border-color: rgba(123,199,240,.35); color: var(--text); }
+
+/* 옵션 버튼 */
+.srch-item__more{
+  border:none; background:transparent; cursor:pointer; padding:6px;
+  border-radius:8px; color:var(--muted);
+}
+.srch-item__more:hover{ background:rgba(255,255,255,.06); color:var(--text); }
+.srch-item__more svg{ width:20px; height:20px; fill:currentColor; }
+
+/* 빈 상태 */
+.srch-empty{
+  display:grid; place-items:center; gap:6px;
+  padding:40px; border:1px dashed rgba(255,255,255,.12); border-radius:14px;
+  background-color:var(--bg); color:var(--muted); text-align:center;
+}
+.srch-empty .ico{font-size:28px;}
+
+/* 스켈레톤 */
+.is-skel{pointer-events:none;}
+.skel-box,
+.skel-line,
+.skel-dot{
+  background:linear-gradient(90deg, #1b2230 0%, #222a3a 50%, #1b2230 100%);
+  background-size:200% 100%;
+  animation:sh 1.2s linear infinite;
+}
+.skel-box{border-radius:12px;}
+.skel-line{height:14px; border-radius:6px;}
+.skel-dot{width:22px; height:22px; border-radius:6px;}
+.w-80{width:80%} .w-60{width:60%} .w-40{width:40%}
+@keyframes sh { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* 반응형 */
+@media (max-width: 980px){
+  .srch-item{ grid-template-columns: minmax(240px, 42%) 1fr auto; }
+}
+@media (max-width: 720px){
+  .srch-item{ grid-template-columns: 1fr; }
+  .srch-item__more{ justify-self:end; }
+}
