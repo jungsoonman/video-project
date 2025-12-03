@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
 
   elasticsearch:
-    build: ./elasticsearch
+    image: my-es:8.17.4-nori
     container_name: elasticsearch
     environment:
       - discovery.type=single-node

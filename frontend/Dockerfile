@@ -1,10 +1,15 @@
+# syntax=docker/dockerfile:1.4
+
 # 1단계: 빌드
 FROM node:20 AS build
 WORKDIR /app
 
-# 의존성 설치
+# 의존성 설치 (package.json / package-lock.json만 먼저 복사)
 COPY package*.json ./
-RUN npm ci          # 배포용이면 npm ci 추천 (lock파일 기준)
+
+# npm 캐시 사용해서 의존성 설치 속도 최적화
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci          # 배포용이면 npm ci 추천 (lock파일 기준)
 
 # 소스 복사 후 빌드
 COPY . .
@@ -24,3 +29,4 @@ COPY --from=build /app/dist ./
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
